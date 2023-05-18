@@ -76,6 +76,7 @@ void Process_Key_Handler(uint8_t keylabel)
 			SendData_PowerOnOff(1);
 			//HAL_Delay(200);
 			Power_On_Fun();
+			run_t.recoder_start_conuter_flag=0;
 
 			run_t.gKey_command_tag = KEY_NULL;
 
@@ -84,9 +85,12 @@ void Process_Key_Handler(uint8_t keylabel)
 
 
 	  case LINK_WIFI_ITEM: //case link_cloud_key:
+	     run_t.recoder_start_conuter_flag=0;
+	     run_t.gTimer_key_start_counter=0;
+		run_t.gTimer_key_counter=0;
          run_t.gTimer_set_temp_times=0; //conflict with send temperatur value 
          SendData_Set_Wifi(0x01);
-	     HAL_Delay(200);
+	     HAL_Delay(5);
 		run_t.wifi_led_fast_blink_flag=1;
 		run_t.wifi_connect_flag =0;
 		run_t.gTimer_wifi_connect_counter=0;

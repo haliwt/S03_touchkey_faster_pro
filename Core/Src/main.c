@@ -151,7 +151,30 @@ int main(void)
 //			if(keyValue==0x81)run_t.gKey_command_tag = LINK_WIFI_ITEM;
 
 
-			
+			if(  run_t.gTimer_key_start_counter ==1){
+
+			     if(POWER_KEY_VALUE() ==KEY_UP){
+                     if(run_t.gTimer_key_counter < 3){
+                           
+					    run_t.gKey_command_tag = POWER_OFF_ITEM; 
+						run_t.gTimer_key_start_counter=0;
+
+					 }
+			     	}
+
+					if(POWER_KEY_VALUE() ==KEY_DOWN){
+					 if(run_t.gTimer_key_counter> 3){
+
+					     run_t.gKey_command_tag = LINK_WIFI_ITEM;
+						 run_t.gTimer_key_start_counter=0;
+
+					 }
+
+
+				 }
+
+
+			}
             
 		    if(run_t.gPower_On == 1 ){
 				keyValue_model = Key_Mode_Scan(KEY_MODE_GPIO_Port,KEY_MODE_Pin,0x02);
