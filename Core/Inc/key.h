@@ -51,7 +51,8 @@ typedef enum{
 	MODE_KEY_ITEM,
 	MODE_KEY_LONG_TIME_KEY,
 	ADD_KEY_ITEM,
-	DEC_KEY_ITEM
+	DEC_KEY_ITEM,
+	KEY_NULL
 }key_state;
 
 

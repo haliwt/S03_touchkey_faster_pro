@@ -67,6 +67,8 @@ void Process_Key_Handler(uint8_t keylabel)
 			run_t.timer_time_minutes =0;
 			run_t.timer_timing_define_flag = timing_not_definition;
 
+			run_t.gKey_command_tag = KEY_NULL;
+
 	  break;
 
 	  case POWER_ON_ITEM:
@@ -74,6 +76,8 @@ void Process_Key_Handler(uint8_t keylabel)
 			SendData_PowerOnOff(1);
 			HAL_Delay(200);
 			Power_On_Fun();
+
+			run_t.gKey_command_tag = KEY_NULL;
 
 		
 		break;
@@ -87,7 +91,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		run_t.wifi_connect_flag =0;
 		run_t.gTimer_wifi_connect_counter=0;
 		
-
+        run_t.gKey_command_tag = KEY_NULL;
 	  break;
 
 	  case MODE_KEY_ITEM://case model_key:
@@ -116,7 +120,7 @@ void Process_Key_Handler(uint8_t keylabel)
 			
 				
 		 }
-	  
+	  run_t.gKey_command_tag = KEY_NULL;
 
 	  break;
 
@@ -137,6 +141,8 @@ void Process_Key_Handler(uint8_t keylabel)
 		   HAL_Delay(50);
 		   
 	  	 }
+
+		run_t.gKey_command_tag = KEY_NULL;
 	  break;
 
 	  case ADD_KEY_ITEM: //case add_key:
@@ -218,6 +224,8 @@ void Process_Key_Handler(uint8_t keylabel)
 			
 				
             }
+
+		 run_t.gKey_command_tag = KEY_NULL;
 	  break;
 
 	  case DEC_KEY_ITEM: //case dec_key:
@@ -293,6 +301,7 @@ void Process_Key_Handler(uint8_t keylabel)
 	    	}
 		}
 
+      run_t.gKey_command_tag = KEY_NULL;
 	  break;
 
 	  default:
