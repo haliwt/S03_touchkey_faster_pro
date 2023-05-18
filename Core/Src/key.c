@@ -146,7 +146,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
    switch(GPIO_Pin){
 
-     HAL_Delay(10);
+    
      case KEY_POWER_Pin:
 	 	if(POWER_KEY_VALUE() ==KEY_DOWN ){
 			
@@ -155,6 +155,8 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 				run_t.gKey_command_tag = POWER_ON_ITEM;
             }
 			else{
+
+			    
 
                 run_t.gKey_command_tag = POWER_OFF_ITEM;
 
@@ -176,6 +178,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 //	 break;
 
 	 case KEY_ADD_Pin:
+	 	 HAL_Delay(10);
 	 	if(ADD_KEY_VALUE() ==KEY_DOWN ){
           
 		run_t.gKey_command_tag = ADD_KEY_ITEM;
@@ -186,6 +189,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 	 break;
 
 	 case KEY_DEC_Pin:
+	 	 HAL_Delay(10);
 		if(DEC_KEY_VALUE() ==KEY_DOWN ){
 
           
@@ -313,7 +317,7 @@ uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t number)
 			break;
 		}
 		case end:
-		{
+		{\
 			if(key_t.read == _KEY_ALL_OFF)
 			{
 				if(++key_t.off_time>2)//50 //100

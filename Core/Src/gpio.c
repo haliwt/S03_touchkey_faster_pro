@@ -70,7 +70,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins output :  KEY_MODE_Pin */
-   GPIO_InitStruct.Pin = KEY_MODE_Pin;
+   GPIO_InitStruct.Pin = KEY_MODE_Pin;//|KEY_POWER_Pin;
    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
