@@ -135,6 +135,10 @@ int main(void)
            }
 		  
 			//key_read_value  = KEY_Scan();
+			keyValue = Key_Mode_Scan(KEY_MODE_GPIO_Port,KEY_MODE_Pin,0x02);
+		    if(keyValue == 0X02) run_t.gKey_command_tag = MODE_KEY_ITEM;
+			if(keyValue==0x82)run_t.gKey_command_tag = MODE_KEY_LONG_TIME_KEY;
+
 			Process_Key_Handler(run_t.gKey_command_tag);
 			RunPocess_Command_Handler();
 			USART1_Cmd_Error_Handler();

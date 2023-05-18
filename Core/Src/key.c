@@ -10,6 +10,7 @@
 
 key_types key_t;
 
+uint16_t key_mode_counter;
 
 
 uint8_t KEY_Scan(void)
@@ -141,6 +142,8 @@ uint8_t KEY_Scan(void)
 ***********************************************************/
 void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
+   static uint16_t mode_key_long_times;
+
    switch(GPIO_Pin){
 
      HAL_Delay(10);
@@ -161,17 +164,16 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
      break;
 
-	 case KEY_MODE_Pin:
-	 	if(MODE_KEY_VALUE()==KEY_DOWN ){
-
-
-		    run_t.gKey_command_tag = MODE_KEY_ITEM;
-
-
-
-		}
-
-	 break;
+//	 case KEY_MODE_Pin:
+//	 	 if(MODE_KEY_VALUE()==KEY_DOWN){
+//
+//		    
+//                 key_mode_counter++;
+//
+//
+//		 }
+//
+//	 break;
 
 	 case KEY_ADD_Pin:
 	 	if(ADD_KEY_VALUE() ==KEY_DOWN ){
@@ -207,6 +209,133 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
 }
 
+/**
+
+  * @brief   ¼ì²âÊÇ·ñÓÐ°´¼ü°´ÏÂ
+
+  * @param   ¾ßÌåµÄ¶Ë¿ÚºÍ¶Ë¿ÚÎ»
+
+  *		@arg GPIOx: x¿ÉÒÔÊÇ£¨A...G£© 
+
+  *		@arg GPIO_PIN ¿ÉÒÔÊÇGPIO_PIN_x£¨x¿ÉÒÔÊÇ1...16£©
+
+  * @retval  °´¼üµÄ×´Ì¬
+
+  *		@arg KEY_ON:°´¼ü°´ÏÂ
+
+  *		@arg KEY_OFF:°´¼üÃ»°´ÏÂ
+
+  */
+
+uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t number)
+
+{			
+      uint8_t  reval = 0;
+ 
+     key_t.read = _KEY_ALL_OFF; //0xFF 
+  
+  
+    if(HAL_GPIO_ReadPin(GPIOx,GPIO_Pin) ==KEY_DOWN )
+	{
+		key_t.read &= ~number; // 0xFf & 0xfd =  0xFD
+	}
+    
+   
+
+    switch(key_t.state )
+	{
+		case start:
+		{
+			if(key_t.read != _KEY_ALL_OFF)
+			{
+				key_t.buffer   = key_t.read; //??:key.buffer = 0xFE  POWER KEY 
+				key_t.state    = first;
+				key_t.on_time  = 0;
+				key_t.off_time = 0;
+                
+			}
+			break;
+		}
+		case first:
+		{
+			if(key_t.read == key_t.buffer) // adjust key be down ->continunce be pressed key
+			{
+
+			 if(++key_t.on_time>54 ){
+
+					key_t.value = key_t.buffer^_KEY_ALL_OFF; // key.value = 0xFE ^ 0xFF = 0x01
+					key_t.on_time = 0;                        //key .value = 0xEF ^ 0XFF = 0X10
+                   
+					key_t.state   = second;
+
+
+				 }
+			}
+			else
+			{
+				key_t.on_time = 0; 
+				key_t.state   = start;
+			}
+			break;
+		}
+		case second:
+		{
+			if(key_t.read == key_t.buffer) //again adjust key if be pressed down 
+			{
+				if(++key_t.on_time> 1000 && run_t.gPower_On ==1)// 500 long key be down
+				{
+					
+					key_t.value = key_t.value|0x80; //key.value(power_on) = 0x01 | 0x80  =0x81  
+					key_t.on_time = 0;               //key.vaule(model_key) = 0x01 | 0x80 = 0x82
+					key_t.state   = finish; 
+                   
+				}
+			}
+			else if(key_t.read == _KEY_ALL_OFF)  // loose hand 
+				{
+					if(++key_t.off_time>2) //8 //30 don't holding key dithering
+					{
+						key_t.value = key_t.buffer^_KEY_ALL_OFF; // key.value = 0x1E ^ 0x1f = 0x01
+						
+						key_t.state   = finish; // loose hand
+					}
+					
+				}
+		   
+			break;
+		}
+		case finish:
+		{
+			
+			reval = key_t.value; // is short time  TIMER_KEY = 0x01  2. long times TIMER_KEY = 0X81
+			key_t.state   = end;
+         
+			break;
+		}
+		case end:
+		{
+			if(key_t.read == _KEY_ALL_OFF)
+			{
+				if(++key_t.off_time>2)//50 //100
+				{
+					key_t.state   = start;
+                   
+                  
+				}
+				
+			}
+			break;
+		}
+		default:
+		{
+			key_t.state   = start;
+            
+			break;
+		}
+	}
+	return  reval;
+
+}
 
 
 
