@@ -73,7 +73,7 @@ void Process_Key_Handler(uint8_t keylabel)
 
 	  case POWER_ON_ITEM:
 			run_t.gTimer_set_temp_times=0; //conflict with send temperatur value 
-			//SendData_PowerOnOff(1);
+			SendData_PowerOnOff(1);
 			//HAL_Delay(200);
 			Power_On_Fun();
 
@@ -104,7 +104,7 @@ void Process_Key_Handler(uint8_t keylabel)
                run_t.display_set_timer_timing = timer_time;
 			   run_t.gModel=0;
 		      SendData_Set_Wifi(MODE_TIMER);
-			  HAL_Delay(50);
+			 // HAL_Delay(50);
                
 		   	}
 		    else if(run_t.display_set_timer_timing == timer_time){
@@ -113,7 +113,7 @@ void Process_Key_Handler(uint8_t keylabel)
              
 	           run_t.gModel=1;
 			  SendData_Set_Wifi(MODE_AI);
-			  HAL_Delay(50);
+			 // HAL_Delay(50);
 				
 			}
 			
@@ -138,7 +138,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		   
 		   
 		   SendData_Set_Wifi(MODE_TIMER);
-		   HAL_Delay(50);
+		  // HAL_Delay(50);
 		   
 	  	 }
 
@@ -249,7 +249,7 @@ void Process_Key_Handler(uint8_t keylabel)
 
 	        decade_temp =  run_t.wifi_set_temperature / 10;
 			unit_temp =  run_t.wifi_set_temperature % 10; //
-             HAL_Delay(5);
+         //    HAL_Delay(5);
 			lcd_t.number1_low=decade_temp;
 			lcd_t.number1_high =decade_temp;
 
@@ -353,7 +353,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		if(run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM){
 			
 			
-           //    SendData_PowerOnOff(0);
+               SendData_PowerOnOff(0);
            //    HAL_Delay(300);
 			
 

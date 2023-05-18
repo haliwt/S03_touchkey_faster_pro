@@ -162,7 +162,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
      break;
 
 	 case KEY_MODE_Pin:
-	 	if(DEC_KEY_VALUE()==KEY_DOWN ){
+	 	if(MODE_KEY_VALUE()==KEY_DOWN ){
 
 
 		    run_t.gKey_command_tag = MODE_KEY_ITEM;
