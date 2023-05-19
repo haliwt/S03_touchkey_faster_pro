@@ -314,14 +314,7 @@ void Process_Key_Handler(uint8_t keylabel)
 
 	}
 	
-	    
-                
-	
-	
-
 }
-
-
 /************************************************************************
 	*
 	*Function Name: static void Power_Off_Fun(void)
