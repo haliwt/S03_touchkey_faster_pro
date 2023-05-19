@@ -54,7 +54,7 @@ void Process_Key_Handler(uint8_t keylabel)
 
       case POWER_OFF_ITEM://case power_key:
             Power_Off_Fun();
-          //  HAL_Delay(200);
+            run_t.input_key_flag =POWER_OFF_ITEM;
 			run_t.temperature_set_flag = 0;
 			run_t.wifi_set_temperature_value_flag=0;
 		    run_t.gTimer_set_temp_times=0; //conflict with send temperatur value 
@@ -72,10 +72,11 @@ void Process_Key_Handler(uint8_t keylabel)
 	  break;
 
 	  case POWER_ON_ITEM:
+	  		Power_On_Fun();
 			run_t.gTimer_set_temp_times=0; //conflict with send temperatur value 
-			SendData_PowerOnOff(1);
-			//HAL_Delay(200);
-			Power_On_Fun();
+			
+			run_t.input_key_flag =POWER_ON_ITEM;
+			
 			run_t.recoder_start_conuter_flag=0;
 
 			run_t.gKey_command_tag = KEY_NULL;
@@ -90,7 +91,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		run_t.gTimer_key_counter=0;
          run_t.gTimer_set_temp_times=0; //conflict with send temperatur value 
          SendData_Set_Wifi(0x01);
-	     HAL_Delay(5);
+	     HAL_Delay(1);
 		run_t.wifi_led_fast_blink_flag=1;
 		run_t.wifi_connect_flag =0;
 		run_t.gTimer_wifi_connect_counter=0;
@@ -337,8 +338,6 @@ void Process_Key_Handler(uint8_t keylabel)
       
 		run_t.timer_timing_define_flag = timing_not_definition;
 
-		
-	
 		run_t.power_key =2;
 		run_t.gFan_RunContinue=1;
 		run_t.disp_wind_speed_grade =1;	
@@ -347,14 +346,6 @@ void Process_Key_Handler(uint8_t keylabel)
 		power_on_off_flag=1;
 
    
-		if(run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM){
-			
-			
-               SendData_PowerOnOff(0);
-           //    HAL_Delay(300);
-			
-
-        }
 		
 
   
@@ -646,10 +637,19 @@ void RunPocess_Command_Handler(void)
    switch(run_t.gPower_On){
 
    case RUN_POWER_ON:
+
+       if(run_t.input_key_flag ==POWER_ON_ITEM){
+			run_t.input_key_flag=KEY_NULL;
+            SendData_PowerOnOff(1);
+			HAL_Delay(1);
+
+		}
   
 	    Lcd_PowerOn_Fun();
 	    Timing_Handler();
 	    DisplayPanel_Ref_Handler();
+
+		
 
       //send timer timing value to main board 
       if(run_t.setup_timer_flag==1){
@@ -771,6 +771,12 @@ void RunPocess_Command_Handler(void)
      break;
 
 	 case RUN_POWER_OFF:
+	    if(run_t.input_key_flag ==POWER_OFF_ITEM){
+			run_t.input_key_flag=KEY_NULL;
+            SendData_PowerOnOff(0);
+			HAL_Delay(1);
+
+		}
    	      Breath_Led();
          
          if(run_t.gFan_RunContinue == 1){

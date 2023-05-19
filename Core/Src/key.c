@@ -365,7 +365,9 @@ static uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t numbe
 
 void Key_TheSecond_Scan(void)
 {
-	if(  run_t.gTimer_key_start_counter ==1){
+	uint8_t keyValue_model;
+    
+    if(  run_t.gTimer_key_start_counter ==1){
 
 		if(POWER_KEY_VALUE() ==KEY_UP){
 		if(run_t.gTimer_key_counter < 3){

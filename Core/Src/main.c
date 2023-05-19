@@ -63,7 +63,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-   uint8_t keyValue,keyValue_model;
+   
 /* USER CODE END 0 */
 
 /**
@@ -135,10 +135,7 @@ int main(void)
                 
            }
 		  
-
-
-
-			Key_TheSecond_Scan();
+            Key_TheSecond_Scan();
 
 			Process_Key_Handler(run_t.gKey_command_tag);
 			RunPocess_Command_Handler();
