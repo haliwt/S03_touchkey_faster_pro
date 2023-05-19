@@ -513,7 +513,7 @@ static void Setup_Timer_Times(void)
                      run_t.timer_time_minutes =0;
 				     run_t.display_set_timer_timing=beijing_time;
                      run_t.gModel=1;
-					 SendData_Set_Wifi(MODE_AI);
+					 SendData_Set_Command(MODE_AI_NO_BUZZER);
                  }
                             
                 
@@ -703,11 +703,8 @@ void RunPocess_Command_Handler(void)
 			else if((run_t.wifi_set_temperature -3) > run_t.gReal_humtemp[1] ||  run_t.gReal_humtemp[1] < 37){
 	  
 		         run_t.gDry = 1;
-			     
-
-		         
-	                SendData_Set_Command(DRY_ON_NO_BUZZER);
-                     HAL_Delay(200);
+			     SendData_Set_Command(DRY_ON_NO_BUZZER);
+                     HAL_Delay(1);
 		         }
 				 
 		  }
@@ -735,7 +732,7 @@ void RunPocess_Command_Handler(void)
            run_t.gTimer_connect_wifi=0;
            link_wifi_success=0;
            SendData_Set_Command(WIFI_CONNECT_FAIL);//0x55
-           HAL_Delay(10);
+           HAL_Delay(2);
 
      }
 
@@ -796,27 +793,7 @@ void RunPocess_Command_Handler(void)
     break;
    	}
 }
-/******************************************************************************
-*
-*Function Name:void Single_RunCmd(void)
-*Funcion: handle of receive by usart data
-*
-*
-******************************************************************************/
-static void RunKeyOrder_Handler(void)
-{
-	
-  
 
-
-	 Lcd_PowerOn_Fun();
-	 Timing_Handler();
-	 DisplayPanel_Ref_Handler();
-     
-    
-    
-	 
-}
 
 /**********************************************************************************************************
 **

@@ -64,6 +64,7 @@ typedef enum{
 
 	 MODE_AI = 0x04,
 	 MODE_TIMER = 0x14,
+	 MODE_AI_NO_BUZZER= 0x44,
 
 	 WIFI_CONNECT_FAIL=0x55,
 
