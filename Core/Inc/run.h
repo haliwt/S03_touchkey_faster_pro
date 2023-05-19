@@ -89,9 +89,9 @@ typedef struct __RUN{
 
    //iwdg ref
    uint8_t process_run_guarantee_flag;
-   uint8_t iwdg_feed_success_flag ;
-   uint8_t gTimer_check_iwdg_flag;
-   uint8_t gTimer_iwdg ;
+
+
+ 
    uint8_t key_read_value;
    uint8_t gTimer_usart_error;
    uint8_t gPower_repeat_times_flag;

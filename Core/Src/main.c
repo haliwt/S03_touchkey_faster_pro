@@ -134,21 +134,7 @@ int main(void)
                 
            }
 		  
-			//key_read_value  = KEY_Scan();
-//		    keyValue = Key_Mode_Scan(KEY_POWER_GPIO_Port,KEY_POWER_Pin,0x01);
-//            if(keyValue == 0X01){
-//				i++;
-//				if(i==1)
-//				   run_t.gKey_command_tag = POWER_ON_ITEM;
-//				else{
-//				i=0;
-//				run_t.gKey_command_tag = POWER_OFF_ITEM;   
 
-//				}
-//					
-//				
-//            }
-//			if(keyValue==0x81)run_t.gKey_command_tag = LINK_WIFI_ITEM;
 
 
 			if(  run_t.gTimer_key_start_counter ==1){
@@ -158,7 +144,7 @@ int main(void)
                            
 					    run_t.gKey_command_tag = POWER_OFF_ITEM; 
 						run_t.gTimer_key_start_counter=0;
-					    run_t.gTimer_key_start_counter =0;
+					
 
 					 }
 			     	}
@@ -168,7 +154,7 @@ int main(void)
 
 					     run_t.gKey_command_tag = LINK_WIFI_ITEM;
 						 run_t.gTimer_key_start_counter=0;
-					     run_t.gTimer_key_start_counter =0;
+					 
 
 					 }
 
