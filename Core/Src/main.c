@@ -73,7 +73,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-     uint8_t i;
+    static uint8_t power_on_the_first;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -119,14 +119,16 @@ int main(void)
     
          
 		  HAL_Delay(3000);
-	      run_t.gPower_On=0;
+
           run_t.power_times++;
-		  
-		  
+		  power_on_the_first++;
+		  run_t.gPower_On = RUN_POWER_OFF;
+           run_t.gKey_command_tag = POWER_OFF_ITEM;
 	  
       break;
       
       case 1:
+          
 	 
           if(run_t.decodeFlag ==1){
 			  run_t.decodeFlag =0;
@@ -134,9 +136,13 @@ int main(void)
              Decode_Function();
                 
            }
-		  
+		   
             Key_TheSecond_Scan();
-
+            if(power_on_the_first==1){
+               power_on_the_first++;
+               run_t.gPower_On = RUN_POWER_OFF;
+              run_t.gKey_command_tag = POWER_OFF_ITEM;
+           }
 			Process_Key_Handler(run_t.gKey_command_tag);
 			RunPocess_Command_Handler();
 			USART1_Cmd_Error_Handler();

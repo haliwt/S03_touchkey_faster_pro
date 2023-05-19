@@ -54,6 +54,7 @@ void Process_Key_Handler(uint8_t keylabel)
 
       case POWER_OFF_ITEM://case power_key:
             Power_Off_Fun();
+			run_t.gPower_On = RUN_POWER_OFF;
             run_t.input_key_flag =POWER_OFF_ITEM;
 			run_t.temperature_set_flag = 0;
 			run_t.wifi_set_temperature_value_flag=0;
@@ -331,24 +332,17 @@ void Process_Key_Handler(uint8_t keylabel)
 		run_t.gPlasma=0;
 		run_t.gDry =0;
 		run_t.gUltransonic =0;
-		
-		 run_t.wifi_led_fast_blink_flag=0;
-		
-			
-      
-		run_t.timer_timing_define_flag = timing_not_definition;
 
-		run_t.power_key =2;
+		run_t.gPower_On=0;
+		
+		run_t.wifi_led_fast_blink_flag=0;
+		run_t.timer_timing_define_flag = timing_not_definition;
 		run_t.gFan_RunContinue=1;
 		run_t.disp_wind_speed_grade =1;	
-		run_t.gPower_On=0;
+		
 		run_t.fan_off_60s =0;
 		power_on_off_flag=1;
 
-   
-		
-
-  
 } 
 
 
@@ -359,7 +353,7 @@ static void Power_On_Fun(void)
                 
 	run_t.gPower_On=1;
 
-	run_t.power_key =1;
+	
 	run_t.gFan_RunContinue=0;
 
 	run_t.gModel =1; //WT.EDIT 2022.09.01
@@ -638,7 +632,7 @@ void RunPocess_Command_Handler(void)
 
    case RUN_POWER_ON:
 
-       if(run_t.input_key_flag ==POWER_ON_ITEM){
+       if(run_t.input_key_flag ==POWER_ON_ITEM && run_t.wifi_send_buzzer_sound != WIFI_POWER_ON_ITEM ){
 			run_t.input_key_flag=KEY_NULL;
             SendData_PowerOnOff(1);
 			HAL_Delay(1);
@@ -768,7 +762,7 @@ void RunPocess_Command_Handler(void)
      break;
 
 	 case RUN_POWER_OFF:
-	    if(run_t.input_key_flag ==POWER_OFF_ITEM){
+	    if(run_t.input_key_flag ==POWER_OFF_ITEM && run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM ){
 			run_t.input_key_flag=KEY_NULL;
             SendData_PowerOnOff(0);
 			HAL_Delay(1);
@@ -986,9 +980,7 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 
 	  break;
 
-	  case IWDG_DATA:        
-          run_t.process_run_guarantee_flag=1;
-      break;
+
 
 
       default:
@@ -1016,9 +1008,9 @@ void Receive_Wifi_Cmd(uint8_t cmd)
 		 	
            
               run_t.wifi_send_buzzer_sound = WIFI_POWER_ON_ITEM;
-	          Power_On_Fun();
+	         
 		      run_t.wifi_connect_flag =1;
-         
+				run_t.gKey_command_tag = POWER_ON_ITEM;
 			  cmd=0xff;
 
 	         break;
@@ -1028,8 +1020,7 @@ void Receive_Wifi_Cmd(uint8_t cmd)
 			   run_t.wifi_connect_flag =1;
 			   run_t.wifi_send_buzzer_sound = WIFI_POWER_OFF_ITEM;
 				
-			    Power_Off_Fun();
-              //  HAL_Delay(200);
+			   run_t.gKey_command_tag=POWER_OFF_ITEM;
 				
               cmd=0xff;
 
@@ -1130,17 +1121,7 @@ void Receive_Wifi_Cmd(uint8_t cmd)
                    
 			   }
 			 break;
-
-			 case IWDG_DATA:
-
-			   run_t.process_run_guarantee_flag =1;
-
-			 break;
-
-		
-
-
-	         default :
+				default :
                   cmd =0;
 			 break;
 

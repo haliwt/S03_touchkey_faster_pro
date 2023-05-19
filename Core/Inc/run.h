@@ -32,7 +32,7 @@ typedef enum TIMING_T{
 typedef struct __RUN{
 
   
-   uint8_t power_key;
+   
    uint8_t gTemperature_timer_flag;
    uint8_t gPower_On;
    uint8_t gRun_flag;

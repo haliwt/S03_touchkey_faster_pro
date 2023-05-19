@@ -177,7 +177,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
 					}
 					
-                   //run_t.gKey_command_tag = POWER_OFF_ITEM;
+                   
 			    }
 
 			}
@@ -367,7 +367,7 @@ void Key_TheSecond_Scan(void)
 {
 	uint8_t keyValue_model;
     
-    if(  run_t.gTimer_key_start_counter ==1){
+    if(run_t.gTimer_key_start_counter ==1 && run_t.gPower_On==1){
 
 		if(POWER_KEY_VALUE() ==KEY_UP){
 		if(run_t.gTimer_key_counter < 3){
@@ -380,10 +380,10 @@ void Key_TheSecond_Scan(void)
 		}
 
 		if(POWER_KEY_VALUE() ==KEY_DOWN){
-		if(run_t.gTimer_key_counter> 3 || run_t.gTimer_key_counter==3){
+			if(run_t.gTimer_key_counter> 3 || run_t.gTimer_key_counter==3){
 
-		run_t.gKey_command_tag = LINK_WIFI_ITEM;
-		run_t.gTimer_key_start_counter=0;
+			run_t.gKey_command_tag = LINK_WIFI_ITEM;
+			run_t.gTimer_key_start_counter=0;
 
 
 		}
