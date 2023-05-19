@@ -12,6 +12,9 @@ key_types key_t;
 
 uint16_t key_mode_counter;
 
+static uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t number);
+
+
 
 uint8_t KEY_Scan(void)
 {
@@ -249,7 +252,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
   */
 
-uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t number)
+static uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t number)
 
 {			
       uint8_t  reval = 0;
@@ -360,5 +363,42 @@ uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t number)
 }
 
 
+void Key_TheSecond_Scan(void)
+{
+	if(  run_t.gTimer_key_start_counter ==1){
 
+		if(POWER_KEY_VALUE() ==KEY_UP){
+		if(run_t.gTimer_key_counter < 3){
+
+		run_t.gKey_command_tag = POWER_OFF_ITEM; 
+		run_t.gTimer_key_start_counter=0;
+
+
+		}
+		}
+
+		if(POWER_KEY_VALUE() ==KEY_DOWN){
+		if(run_t.gTimer_key_counter> 3 || run_t.gTimer_key_counter==3){
+
+		run_t.gKey_command_tag = LINK_WIFI_ITEM;
+		run_t.gTimer_key_start_counter=0;
+
+
+		}
+
+
+		}
+
+
+	}
+
+	if(run_t.gPower_On == 1 ){
+		keyValue_model = Key_Mode_Scan(KEY_MODE_GPIO_Port,KEY_MODE_Pin,0x02);
+		if(keyValue_model == 0X02) run_t.gKey_command_tag = MODE_KEY_ITEM;
+		if(keyValue_model==0x82)run_t.gKey_command_tag = MODE_KEY_LONG_TIME_KEY;
+	}
+
+
+
+}
 

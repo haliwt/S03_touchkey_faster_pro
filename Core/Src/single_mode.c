@@ -487,6 +487,14 @@ static void Timing_Handler(void)
 		
     }
 }
+/*************************************************************************
+	*
+	*Functin Name:static void Setup_Timer_Times(void)
+	*Function : set up timer timing function
+	*
+	*
+	*
+*************************************************************************/
 static void Setup_Timer_Times(void)
 {
 
@@ -545,7 +553,14 @@ static void Setup_Timer_Times(void)
 			lcd_t.number8_low = (run_t.timer_time_minutes)%10;
 			lcd_t.number8_high = (run_t.timer_time_minutes )%10;
 }
-        
+/*************************************************************************
+	*
+	*Functin Name:void Setup_Timer_Times_Donot_Display(void)
+	*
+	*
+	*
+	*
+*************************************************************************/       
 void Setup_Timer_Times_Donot_Display(void)
 {
    if(run_t.gTimer_timing > 59){ //

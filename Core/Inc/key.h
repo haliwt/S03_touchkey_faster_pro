@@ -100,7 +100,9 @@ uint8_t  KEY_GPIO_Scan(uint8_t mode);
 
 void WaitingPowerOn_Fun(void);
 void Wifi_Detected_KeyScan(void);
-uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t number);
+
+void Key_TheSecond_Scan(void);
+
 
 #endif 
 
