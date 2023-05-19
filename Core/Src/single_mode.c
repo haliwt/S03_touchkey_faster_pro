@@ -28,7 +28,7 @@ void (*sendAi_usart_fun)(uint8_t senddat);
 
 static void Receive_Wifi_Cmd(uint8_t cmd);
 
-static void RunKeyOrder_Handler(void);
+
 static void Timing_Handler(void);
 //static void Power_Off_Fun(void);
 static void Power_On_Fun(void);
@@ -47,8 +47,8 @@ void Setup_Timer_Times_Donot_Display(void);
 ************************************************************************/
 void Process_Key_Handler(uint8_t keylabel)
 {
-    static uint8_t power_on_flag_times,power_on_fisrt_flag,changed_lcd_display_model,display_model;
-    static uint8_t set_timer_flag,temp_bit_1_hours,temp_bit_2_hours,temp_bit_1_minute,temp_bit_2_minute;
+    static uint8_t power_on_fisrt_flag,display_model;
+    static uint8_t temp_bit_1_hours,temp_bit_2_hours,temp_bit_1_minute,temp_bit_2_minute;
   
     switch(keylabel){
 
@@ -138,7 +138,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		   run_t.setup_timer_timing_item=1;//run_t.gModel =2;
 		   run_t.display_set_timer_timing  =timer_time;
 		   run_t.gTimer_key_timing=0;
-		   set_timer_flag=0;
+		
            display_model =1;
 		   run_t.Timer_mode_flag=1;
 		   
@@ -195,7 +195,7 @@ void Process_Key_Handler(uint8_t keylabel)
 			   case 1:
 				    display_model++;
 					run_t.gTimer_key_timing =0;
-                    set_timer_flag=0;
+                 
 					run_t.timer_time_hours++ ;//run_t.dispTime_minutes = run_t.dispTime_minutes + 60;
 				    if(run_t.timer_time_hours > 24){ //if(run_t.dispTime_minutes > 59){
 
@@ -271,7 +271,7 @@ void Process_Key_Handler(uint8_t keylabel)
 	    
 			    display_model++;
 				run_t.gTimer_key_timing =0;
-                set_timer_flag=0;
+           
 				run_t.timer_time_hours -- ;//run_t.dispTime_minutes = run_t.dispTime_minutes - 1;
 				if(run_t.timer_time_hours < 0){//if(run_t.dispTime_minutes < 0){
 
