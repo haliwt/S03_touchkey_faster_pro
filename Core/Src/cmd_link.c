@@ -270,12 +270,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 			 case WIFI_SET_GMT_SECOND:
 				
-
-		
-	                 run_t.gmt_time_seconds = inputBuf[0]+1;
-					 run_t.dispTime_seconds = inputBuf[0]+1;
-					 run_t.decodeFlag=1;
-				    state=0;
+				run_t.gmt_time_seconds = inputBuf[0]+1;
+			    run_t.dispTime_seconds = inputBuf[0]+1;
+				run_t.decodeFlag=1;
+				state=0;
 				
 		 
                  

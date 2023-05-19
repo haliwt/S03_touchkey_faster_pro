@@ -1010,6 +1010,7 @@ void Receive_Wifi_Cmd(uint8_t cmd)
               run_t.wifi_send_buzzer_sound = WIFI_POWER_ON_ITEM;
 	         
 		      run_t.wifi_connect_flag =1;
+			  run_t.gPower_On = 1;
 				run_t.gKey_command_tag = POWER_ON_ITEM;
 			  cmd=0xff;
 
