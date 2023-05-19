@@ -2,6 +2,14 @@
 #define __SINGLE_MODE_
 #include "main.h"
 
+typedef enum{
+
+    RUN_POWER_OFF,
+	RUN_POWER_ON,
+
+
+}run_prcess_state;
+
 
 typedef enum{
 

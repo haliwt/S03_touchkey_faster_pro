@@ -491,10 +491,7 @@ static void Setup_Timer_Times(void)
 {
 
 
-
- 
-
-	if(run_t.gTimer_timing > 59){ //
+      if(run_t.gTimer_timing > 59){ //
         
         run_t.gTimer_timing =0;
 		 run_t.timer_time_minutes --;
@@ -522,6 +519,7 @@ static void Setup_Timer_Times(void)
      
                      run_t.timer_time_hours =0;
                      run_t.timer_time_minutes =0;
+				     run_t.display_set_timer_timing=beijing_time;
                  
                  }
                             
@@ -636,9 +634,10 @@ void RunPocess_Command_Handler(void)
 
    static uint8_t temp1,temp2,decade_temp,unit_temp,key_set_temp_flag, link_wifi_success;
    static uint8_t power_on_fisrt_send_temperature_value, works_break_flag;
-   if(run_t.gPower_On ==1 && run_t.decodeFlag ==0){
+   switch(run_t.gPower_On){
 
-    //   RunKeyOrder_Handler();
+   case RUN_POWER_ON:
+  
 	    Lcd_PowerOn_Fun();
 	    Timing_Handler();
 	    DisplayPanel_Ref_Handler();
@@ -708,7 +707,7 @@ void RunPocess_Command_Handler(void)
    
    //receive from mainboard data 
    //displayPannel set temperature vale to main board value 
-    if(run_t.gTimer_set_temp_times >9 && run_t.gPower_On==1){ // 4s
+    if(run_t.gTimer_set_temp_times >9){ // set up temperature value [20,40]
 	     run_t.gTimer_set_temp_times=0;
 		 if(run_t.wifi_set_temperature==0)run_t.wifi_set_temperature=20;
 		 if(power_on_fisrt_send_temperature_value ==0){
@@ -719,7 +718,7 @@ void RunPocess_Command_Handler(void)
 		 }
 		  if(run_t.wifi_set_temperature_value_flag != 1){
 		  	  SendData_Temp_Data(run_t.wifi_set_temperature);
-               HAL_Delay(10);
+               HAL_Delay(2);
 			}
     }
 
@@ -760,13 +759,10 @@ void RunPocess_Command_Handler(void)
 
 	      }
   
-  
-        }
+     break;
 
-   if((run_t.gPower_On ==0 || run_t.gPower_On == 0xff) && run_t.wifi_send_buzzer_sound != WIFI_POWER_ON_ITEM){
-	 	
-	      Breath_Led();
-	      run_t.gPower_On =0xff;
+	 case RUN_POWER_OFF:
+   	      Breath_Led();
          
          if(run_t.gFan_RunContinue == 1){
            if(run_t.fan_off_60s < 61){
@@ -781,7 +777,9 @@ void RunPocess_Command_Handler(void)
 		   }
 
          }
-    }
+   
+    break;
+   	}
 }
 /******************************************************************************
 *
@@ -793,7 +791,7 @@ void RunPocess_Command_Handler(void)
 static void RunKeyOrder_Handler(void)
 {
 	
-    if(run_t.gPower_On ==1 ){
+  
 
 
 	 Lcd_PowerOn_Fun();
@@ -801,7 +799,7 @@ static void RunKeyOrder_Handler(void)
 	 DisplayPanel_Ref_Handler();
      
     
-    }
+    
 	 
 }
 

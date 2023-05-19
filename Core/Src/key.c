@@ -150,7 +150,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 	 	if(POWER_KEY_VALUE() ==KEY_DOWN ){
 			
 			
-            if(run_t.gPower_On == 0 || run_t.gPower_On == 0xff){
+            if(run_t.gPower_On == 0){
 				
 				run_t.gKey_command_tag = POWER_ON_ITEM;
 
