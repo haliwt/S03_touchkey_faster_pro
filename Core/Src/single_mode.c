@@ -633,10 +633,9 @@ static void Works_Counter_Time(void)
 void RunPocess_Command_Handler(void)
 {
    //key input run function
-   static uint8_t power_on_fisrt_send_temperature_value,works_break_flag;
-   static uint8_t key_set_temp_flag,temp1,temp2,decade_temp,unit_temp;
-   static uint8_t link_wifi_success,send_set_temperature_value;
-   static uint8_t setup_timer;
+
+   static uint8_t temp1,temp2,decade_temp,unit_temp,key_set_temp_flag, link_wifi_success;
+   static uint8_t power_on_fisrt_send_temperature_value, works_break_flag;
    if(run_t.gPower_On ==1 && run_t.decodeFlag ==0){
 
     //   RunKeyOrder_Handler();
@@ -649,7 +648,7 @@ void RunPocess_Command_Handler(void)
 		   run_t.setup_timer_flag++;
 
 	       SendData_Time_Data(run_t.dispTime_hours);
-		  HAL_Delay(200);
+		  HAL_Delay(5);
 
 
 	  }

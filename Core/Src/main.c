@@ -122,6 +122,7 @@ int main(void)
 	      run_t.gPower_On=0;
           run_t.power_times++;
 		  
+		  
 	  
       break;
       
