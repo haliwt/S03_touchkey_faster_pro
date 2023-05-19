@@ -829,16 +829,16 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 	 	if(run_t.gPower_On ==1){
 		  
 
-		   if(run_t.wifi_set_wind_speed <40){
+		   if(run_t.wifi_set_wind_speed <33){
 		   	 
                 run_t.disp_wind_speed_grade = 1;
 		   	}
-			else if(run_t.wifi_set_wind_speed >39 && run_t.wifi_set_wind_speed < 67){
+			else if(run_t.wifi_set_wind_speed >33 && run_t.wifi_set_wind_speed < 66){
 			    run_t.disp_wind_speed_grade = 2;
 
 
 			}
-			else if(run_t.wifi_set_wind_speed >66){
+			else if(run_t.wifi_set_wind_speed >65){
 
 				run_t.disp_wind_speed_grade = 3;
 
@@ -936,10 +936,10 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
             run_t.dispTime_minutes = 0;
              lcd_t.number5_low=(run_t.dispTime_hours ) /10;
 	         lcd_t.number5_high =(run_t.dispTime_hours) /10;
-              HAL_Delay(5);
+              HAL_Delay(1);
 			 lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
 			 lcd_t.number6_high = (run_t.dispTime_hours ) %10;
-	          HAL_Delay(5);
+	          HAL_Delay(1);
 
 
 			lcd_t.number7_low = run_t.dispTime_minutes ;
@@ -965,7 +965,7 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 
 		      temperature_decade=  run_t.wifi_set_temperature /10 ;
 			  temperature_unit =  run_t.wifi_set_temperature %10;
-		       HAL_Delay(5);
+		      // HAL_Delay(5);
 	         lcd_t.number1_high = temperature_decade;
 			 lcd_t.number1_low = temperature_decade;
 
