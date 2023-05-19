@@ -149,6 +149,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
      case KEY_POWER_Pin:
 	 	if(POWER_KEY_VALUE() ==KEY_DOWN ){
 			
+			
             if(run_t.gPower_On == 0 || run_t.gPower_On == 0xff){
 				
 				run_t.gKey_command_tag = POWER_ON_ITEM;
@@ -194,10 +195,10 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 //	 break;
 
 	 case KEY_ADD_Pin:
-	 	 HAL_Delay(10);
-		run_t.recoder_start_conuter_flag=0;
+	 
+
 	 	if(ADD_KEY_VALUE() ==KEY_DOWN ){
-          
+          run_t.recoder_start_conuter_flag=0;
 		run_t.gKey_command_tag = ADD_KEY_ITEM;
 
 
@@ -206,11 +207,10 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 	 break;
 
 	 case KEY_DEC_Pin:
-	 	 HAL_Delay(10);
-		 run_t.recoder_start_conuter_flag=0;
+		
 		if(DEC_KEY_VALUE() ==KEY_DOWN ){
-
-          
+        
+           run_t.recoder_start_conuter_flag=0;
 		 run_t.gKey_command_tag = DEC_KEY_ITEM;
 
 
