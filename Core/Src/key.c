@@ -142,10 +142,7 @@ uint8_t KEY_Scan(void)
 ***********************************************************/
 void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
-   static uint16_t mode_key_long_times;
-
-   static uint8_t i;
-
+  
    switch(GPIO_Pin){
 
     
@@ -156,19 +153,20 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 				
 				run_t.gKey_command_tag = POWER_ON_ITEM;
 
-			    i=0;
+			    run_t.recoder_start_conuter_flag=0;
             }
 			else{
 
 			    if(run_t.gPower_On==1){
 					
-                    run_t.gTimer_key_start_counter=1;
+                    
 					if(run_t.recoder_start_conuter_flag==0){
 						run_t.recoder_start_conuter_flag++;
+						run_t.gTimer_key_start_counter=1;
 					  run_t.gTimer_key_counter=0;
 
 					}
-					if(run_t.gTimer_key_counter> 3){
+					if(run_t.gTimer_key_counter> 3 || run_t.gTimer_key_counter==3){
                         
 					     run_t.gKey_command_tag = LINK_WIFI_ITEM;
 						
@@ -197,7 +195,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
 	 case KEY_ADD_Pin:
 	 	 HAL_Delay(10);
-		 i=0;
+		run_t.recoder_start_conuter_flag=0;
 	 	if(ADD_KEY_VALUE() ==KEY_DOWN ){
           
 		run_t.gKey_command_tag = ADD_KEY_ITEM;
@@ -209,7 +207,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
 	 case KEY_DEC_Pin:
 	 	 HAL_Delay(10);
-		 i=0;
+		 run_t.recoder_start_conuter_flag=0;
 		if(DEC_KEY_VALUE() ==KEY_DOWN ){
 
           

@@ -158,15 +158,17 @@ int main(void)
                            
 					    run_t.gKey_command_tag = POWER_OFF_ITEM; 
 						run_t.gTimer_key_start_counter=0;
+					    run_t.gTimer_key_start_counter =0;
 
 					 }
 			     	}
 
 					if(POWER_KEY_VALUE() ==KEY_DOWN){
-					 if(run_t.gTimer_key_counter> 3){
+					 if(run_t.gTimer_key_counter> 3 || run_t.gTimer_key_counter==3){
 
 					     run_t.gKey_command_tag = LINK_WIFI_ITEM;
 						 run_t.gTimer_key_start_counter=0;
+					     run_t.gTimer_key_start_counter =0;
 
 					 }
 
