@@ -145,10 +145,10 @@ uint8_t KEY_Scan(void)
 ***********************************************************/
 void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
-  
+   //static uint16_t key_power_counter,add_key_counter,dec_key_counter;
    switch(GPIO_Pin){
 
-    
+    HAL_Delay(10);
      case KEY_POWER_Pin:
 	 	if(POWER_KEY_VALUE() ==KEY_DOWN ){
 			
@@ -338,7 +338,7 @@ static uint8_t Key_Mode_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,uint8_t numbe
 			break;
 		}
 		case end:
-		{\
+		{
 			if(key_t.read == _KEY_ALL_OFF)
 			{
 				if(++key_t.off_time>2)//50 //100

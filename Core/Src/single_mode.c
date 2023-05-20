@@ -492,9 +492,8 @@ static void Setup_Timer_Times(void)
 				run_t.timer_time_minutes=0;
 				run_t.wifi_send_buzzer_sound=0xff;
 				Power_Off_Fun();
+			    run_t.input_key_flag ==POWER_OFF_ITEM ;
 
-			
-				run_t.gPower_On =0 ;
 			    run_t.gFan_RunContinue=1;
 				run_t.fan_off_60s = 0;
 	           
