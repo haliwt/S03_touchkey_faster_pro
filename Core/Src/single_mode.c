@@ -338,7 +338,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		run_t.wifi_led_fast_blink_flag=0;
 		run_t.timer_timing_define_flag = timing_not_definition;
 		run_t.gFan_RunContinue=1;
-		run_t.disp_wind_speed_grade =1;	
+		run_t.disp_wind_speed_grade =30;	
 		
 		run_t.fan_off_60s =0;
 		power_on_off_flag=1;
@@ -363,7 +363,7 @@ static void Power_On_Fun(void)
 	
 	run_t.temperature_set_flag = 0; //WT.EDIT 2023.01.31
     run_t.setup_temperature_value=0; // //WT.EDIT 2023.01.31
-    run_t.disp_wind_speed_grade =3;
+    run_t.disp_wind_speed_grade =100;
 	
 	run_t.wifi_send_buzzer_sound=0xff;
 
@@ -492,7 +492,7 @@ static void Setup_Timer_Times(void)
 				run_t.timer_time_minutes=0;
 				run_t.wifi_send_buzzer_sound=0xff;
 				Power_Off_Fun();
-			    run_t.input_key_flag ==POWER_OFF_ITEM ;
+			    run_t.input_key_flag =POWER_OFF_ITEM ;
 
 			    run_t.gFan_RunContinue=1;
 				run_t.fan_off_60s = 0;
@@ -824,32 +824,7 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 	 	 Receive_Wifi_Cmd(run_t.wifiCmd[0]);
 	 break;
 
-	 case  WIFI_WIND_SPEED://6
-	 	if(run_t.gPower_On ==1){
-		  
-
-		   if(run_t.wifi_set_wind_speed <33){
-		   	 
-                run_t.disp_wind_speed_grade = 1;
-		   	}
-			else if(run_t.wifi_set_wind_speed >33 && run_t.wifi_set_wind_speed < 66){
-			    run_t.disp_wind_speed_grade = 2;
-
-
-			}
-			else if(run_t.wifi_set_wind_speed >65){
-
-				run_t.disp_wind_speed_grade = 3;
-
-			}
-
-
-
-		}
-    
-	  
-	 break;
-
+	 
 	 case WIFI_REAL_TEMP: //4//set temperature value
 	       if(run_t.gPower_On ==1){
 		   	   
