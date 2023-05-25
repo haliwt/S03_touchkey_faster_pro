@@ -96,7 +96,10 @@ void Process_Key_Handler(uint8_t keylabel)
 			
 			run_t.recoder_start_conuter_flag=0;
 
+			run_t.gModel =1;
+
 			run_t.gKey_command_tag = KEY_NULL;
+			
 
 		
 		break;
@@ -124,7 +127,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		
                //timer time + don't has ai item
                run_t.display_set_timer_timing = timer_time;
-			   run_t.gModel=0;
+			   run_t.gModel=2;
 		      SendData_Set_Wifi(MODE_TIMER);
 			  HAL_Delay(1);
                
@@ -150,7 +153,7 @@ void Process_Key_Handler(uint8_t keylabel)
 	  case MODE_KEY_LONG_TIME_KEY://case model_long_key:
 	  	if(run_t.gPower_On ==1){
 		  //  SendData_Buzzer();
-			run_t.gModel=0;
+			run_t.gModel=2;
 		   run_t.setup_timer_timing_item=1;//run_t.gModel =2;
 		   run_t.display_set_timer_timing  =timer_time;
 		   run_t.gTimer_key_timing=0;
@@ -344,7 +347,7 @@ void Process_Key_Handler(uint8_t keylabel)
  void Power_Off_Fun(void)
 {
 	
-        run_t.gModel =0; //WT.EDIT 2022.09.01
+        //run_t.gModel =1; //WT.EDIT 2022.09.01
 		run_t.gPlasma=0;
 		run_t.gDry =0;
 		run_t.gUltransonic =0;
@@ -475,8 +478,9 @@ static void Beijing_Time_Display(void)
 
 			}
 	    	}
-            Setup_Timer_Times_Donot_Display();
+            
             if(run_t.gPower_On == RUN_POWER_ON) {
+				Setup_Timer_Times_Donot_Display();
 				lcd_t.number5_low=(run_t.dispTime_hours ) /10;
 				lcd_t.number5_high =(run_t.dispTime_hours) /10;
 
