@@ -107,17 +107,46 @@ void Process_Key_Handler(uint8_t keylabel)
 
 
 	  case LINK_WIFI_ITEM: //case link_cloud_key:
+
+	    switch(run_t.wifi_link_flag){
+
+		  case 0:
+        
+		     SendData_Set_Wifi(0x01);
+		     HAL_Delay(200);
+		     run_t.wifi_link_flag =1;
+         
+		 break;
+
+		 case 1:
+
+		
+		 	
 	     run_t.recoder_start_conuter_flag=0;
 	     run_t.gTimer_key_start_counter=0;
 		run_t.gTimer_key_counter=0;
          run_t.gTimer_set_temp_times=0; //conflict with send temperatur value 
-         SendData_Set_Wifi(0x01);
-	     HAL_Delay(1);
+        
 		run_t.wifi_led_fast_blink_flag=1;
 		run_t.wifi_connect_flag =0;
 		run_t.gTimer_wifi_connect_counter=0;
+		run_t.wifi_link_flag=2;
+
+		 break;
+
+		 case 2: 
+		 	run_t.wifi_link_flag++;
+		    run_t.gKey_command_tag = KEY_NULL;
+
+
+		 break;
+
+		 
 		
-        run_t.gKey_command_tag = KEY_NULL;
+       
+		 }
+	  
+		
 	  break;
 
 	  case MODE_KEY_ITEM://case model_key:
@@ -662,7 +691,7 @@ void RunPocess_Command_Handler(void)
 {
    //key input run function
 
-   static uint8_t temp1,temp2,decade_temp,unit_temp,key_set_temp_flag, link_wifi_success;
+   static uint8_t temp1,temp2,key_set_temp_flag, link_wifi_success;
    static uint8_t power_on_fisrt_send_temperature_value, works_break_flag;
    switch(run_t.gPower_On){
 
