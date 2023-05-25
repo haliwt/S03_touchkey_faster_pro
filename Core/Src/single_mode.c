@@ -418,7 +418,7 @@ static void Timing_Handler(void)
          
      case beijing_time:
 	 	run_t.Timer_mode_flag = 0;
-	    if(run_t.gTimer_minute_Counter >0){ //minute
+	    if(run_t.gTimer_minute_Counter >59){ //minute
 
 			run_t.gTimer_minute_Counter=0;
             run_t.dispTime_minutes ++;
@@ -592,7 +592,7 @@ void Setup_Timer_Times_Donot_Display(void)
 static void Works_Counter_Time(void)
 {
   if(run_t.timer_timing_define_flag == timing_success){
-	  if(run_t.gTimer_minute_Counter >0){ //minute
+	  if(run_t.gTimer_minute_Counter >59){ //minute
 		
 		run_t.gTimer_minute_Counter=0;
         run_t.dispTime_minutes ++;

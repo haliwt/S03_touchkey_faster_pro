@@ -116,14 +116,12 @@ int main(void)
     switch(run_t.power_times){
         
         case 0:
-    
-         
-		  HAL_Delay(3000);
+        HAL_Delay(3000);
 
-          run_t.power_times++;
-		  power_on_the_first++;
-		  run_t.gPower_On = RUN_POWER_OFF;
-           run_t.gKey_command_tag = POWER_OFF_ITEM;
+		run_t.power_times++;
+		power_on_the_first++;
+		run_t.gPower_On = RUN_POWER_OFF;
+		run_t.gKey_command_tag = POWER_OFF_ITEM;
 	  
       break;
       
@@ -131,18 +129,18 @@ int main(void)
           
 	 
           if(run_t.decodeFlag ==1){
-			  run_t.decodeFlag =0;
-			  run_t.process_run_guarantee_flag=1;
-             Decode_Function();
+			run_t.decodeFlag =0;
+			run_t.process_run_guarantee_flag=1;
+            Decode_Function();
                 
            }
 		   
             Key_TheSecond_Scan();
-            if(power_on_the_first==1){
-               power_on_the_first++;
-               run_t.gPower_On = RUN_POWER_OFF;
-              run_t.gKey_command_tag = POWER_OFF_ITEM;
-           }
+			if(power_on_the_first==1){
+				power_on_the_first++;
+				run_t.gPower_On = RUN_POWER_OFF;
+				run_t.gKey_command_tag = POWER_OFF_ITEM;
+			}
 			Process_Key_Handler(run_t.gKey_command_tag);
 			RunPocess_Command_Handler();
 			USART1_Cmd_Error_Handler();

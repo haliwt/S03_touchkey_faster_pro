@@ -273,6 +273,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				
 				run_t.gmt_time_seconds = inputBuf[0]+1;
 			    run_t.dispTime_seconds = inputBuf[0]+1;
+				run_t.gTimer_minute_Counter =inputBuf[0]+1;
 				run_t.decodeFlag=1;
 				state=0;
 				

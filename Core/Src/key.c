@@ -152,7 +152,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
       HAL_Delay(10);
      case KEY_POWER_Pin:
-	 	if(POWER_KEY_VALUE() ==KEY_DOWN ){
+	 	if(POWER_KEY_VALUE() ==KEY_DOWN && run_t.power_times==1){
 			
 			
             if(run_t.gPower_On == 0){
@@ -161,7 +161,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
 			    run_t.recoder_start_conuter_flag=0;
             }
-			else{
+			else if(run_t.power_times==1){
 
 			    if(run_t.gPower_On==1){
 					
@@ -202,7 +202,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 	 case KEY_ADD_Pin:
 	 
 
-	 	if(ADD_KEY_VALUE() ==KEY_DOWN ){
+	 	if(ADD_KEY_VALUE() ==KEY_DOWN && run_t.power_times==1 ){
           run_t.recoder_start_conuter_flag=0;
 		run_t.gKey_command_tag = ADD_KEY_ITEM;
 
@@ -213,7 +213,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
 	 case KEY_DEC_Pin:
 		
-		if(DEC_KEY_VALUE() ==KEY_DOWN ){
+		if(DEC_KEY_VALUE() ==KEY_DOWN && run_t.power_times==1){
         
            run_t.recoder_start_conuter_flag=0;
 		 run_t.gKey_command_tag = DEC_KEY_ITEM;
@@ -372,13 +372,13 @@ void Key_TheSecond_Scan(void)
     if(run_t.gTimer_key_start_counter ==1 && run_t.gPower_On==1){
 
 		if(POWER_KEY_VALUE() ==KEY_UP){
-		if(run_t.gTimer_key_counter < 3){
+			if(run_t.gTimer_key_counter < 3){
 
-		run_t.gKey_command_tag = POWER_OFF_ITEM; 
-		run_t.gTimer_key_start_counter=0;
+				run_t.gKey_command_tag = POWER_OFF_ITEM; 
+				run_t.gTimer_key_start_counter=0;
 
 
-		}
+			}
 		}
 
 		if(POWER_KEY_VALUE() ==KEY_DOWN){
@@ -388,12 +388,10 @@ void Key_TheSecond_Scan(void)
 			run_t.gTimer_key_start_counter=0;
 
 
-		}
+			}
 
 
 		}
-
-
 	}
 
 	if(run_t.gPower_On == 1 ){
