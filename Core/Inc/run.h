@@ -49,6 +49,7 @@ typedef struct __RUN{
   uint8_t gFan_RunContinue;
 
   uint8_t temperature_flag;
+   uint8_t power_off_buzzer_flag ;
   
   uint8_t timer_timing_define_flag;
   uint8_t input_key_flag;

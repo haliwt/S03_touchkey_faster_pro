@@ -372,23 +372,24 @@ void Key_TheSecond_Scan(void)
     if(run_t.gTimer_key_start_counter ==1 && run_t.gPower_On==1){
 
 		if(POWER_KEY_VALUE() ==KEY_UP){
-			if(run_t.gTimer_key_counter < 3){
+			if(run_t.gTimer_key_counter < 2){
 
 				run_t.gKey_command_tag = POWER_OFF_ITEM; 
 				run_t.gTimer_key_start_counter=0;
-
-
+				  SendData_PowerOnOff(0);
+			      HAL_Delay(5);
+			      run_t.power_off_buzzer_flag =1;
+                return ;
 			}
 		}
-
-		if(POWER_KEY_VALUE() ==KEY_DOWN){
+        else if(POWER_KEY_VALUE() ==KEY_DOWN){
 			if(run_t.gTimer_key_counter> 3 || run_t.gTimer_key_counter==3){
 
 			run_t.gKey_command_tag = LINK_WIFI_ITEM;
 			run_t.gTimer_key_start_counter=0;
 			run_t.wifi_link_flag=0;
 
-
+			 return ;
 			}
 
 

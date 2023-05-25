@@ -113,7 +113,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		  case 0:
         
 		     SendData_Set_Wifi(0x01);
-		     HAL_Delay(200);
+		     HAL_Delay(300);
 		     run_t.wifi_link_flag =1;
          
 		 break;
@@ -827,10 +827,10 @@ void RunPocess_Command_Handler(void)
      break;
 
 	 case RUN_POWER_OFF:
-	    if(run_t.input_key_flag ==POWER_OFF_ITEM && run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM ){
+	    if(run_t.input_key_flag ==POWER_OFF_ITEM && run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM && run_t.power_off_buzzer_flag ==0){
 			run_t.input_key_flag=KEY_NULL;
             SendData_PowerOnOff(0);
-			HAL_Delay(1);
+			HAL_Delay(10);
 
 		}
    	    Breath_Led();
