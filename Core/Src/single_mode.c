@@ -97,6 +97,7 @@ void Process_Key_Handler(uint8_t keylabel)
 			run_t.recoder_start_conuter_flag=0;
 
 			run_t.gModel =1;
+			run_t.display_set_timer_timing=beijing_time ;
 
 			run_t.gKey_command_tag = KEY_NULL;
 			
@@ -1021,6 +1022,9 @@ void Receive_Wifi_Cmd(uint8_t cmd)
 	         
 		      run_t.wifi_connect_flag =1;
 			  run_t.gPower_On = 1;
+			  
+				run_t.gModel =1;
+				run_t.display_set_timer_timing=beijing_time ;
 				run_t.gKey_command_tag = POWER_ON_ITEM;
 			  cmd=0xff;
 
