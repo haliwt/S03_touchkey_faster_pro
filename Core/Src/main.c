@@ -96,6 +96,7 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM3_Init();
   //delay_init(24);
+  Beijing_Time_Init();
 
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */

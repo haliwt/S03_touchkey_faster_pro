@@ -79,7 +79,7 @@ typedef enum{
 extern void (*single_ai_fun)(uint8_t cmd);
 extern void (*single_add_fun)(void);
 extern void (*sendAi_usart_fun)(uint8_t senddat);
-
+extern void (*beijing_time_fun)(void);
 
 void Scan_KeyModel(void);
 
@@ -107,6 +107,8 @@ void Power_Off_Fun(void);
 
 void Process_Key_Handler(uint8_t keylabel);
 
+void Beijing_Time_Display_Handler(void(*beijing_time_handler)(void));
+void Beijing_Time_Init(void);
 
 #endif 
 

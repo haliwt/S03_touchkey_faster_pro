@@ -25,6 +25,7 @@ void (*single_ai_fun)(uint8_t cmd);
 void (*single_add_fun)(void);
 void (*single_buzzer_fun)(void);
 void (*sendAi_usart_fun)(uint8_t senddat);
+void (*beijing_time_fun)(void);
 
 static void Receive_Wifi_Cmd(uint8_t cmd);
 
@@ -35,7 +36,22 @@ static void Power_On_Fun(void);
 static void Setup_Timer_Times(void);
 static void Works_Counter_Time(void);
 void Setup_Timer_Times_Donot_Display(void);
+static void Beijing_Time_Display(void);
 
+/************************************************************************
+	*
+	*Function Name: void Process_Key_Handler(uint8_t keylabel)
+	*Function : key by pressed which is key numbers process 
+	*Input Ref: key be pressed value 
+	*Return Ref:No
+	*
+************************************************************************/
+void Beijing_Time_Init(void)
+{
+
+	Beijing_Time_Display_Handler(Beijing_Time_Display);
+
+}
 
 /************************************************************************
 	*
@@ -417,7 +433,31 @@ static void Timing_Handler(void)
      switch(run_t.display_set_timer_timing ){
          
      case beijing_time:
-	 	run_t.Timer_mode_flag = 0;
+       beijing_time_fun();
+
+						 
+    break;
+    
+    case timer_time:
+	
+		Setup_Timer_Times();
+		Works_Counter_Time();
+	
+     
+     break;
+		
+    }
+}
+/*********************************************************************************
+ * 
+ * Function Name:static void Beijing_Time_Dispaly(void)
+ * 
+ * 
+ * 
+**********************************************************************************/
+static void Beijing_Time_Display(void)
+{
+		run_t.Timer_mode_flag = 0;
 	    if(run_t.gTimer_minute_Counter >59){ //minute
 
 			run_t.gTimer_minute_Counter=0;
@@ -436,34 +476,26 @@ static void Timing_Handler(void)
 			}
 	    	}
             Setup_Timer_Times_Donot_Display();
-                
-			lcd_t.number5_low=(run_t.dispTime_hours ) /10;
-			lcd_t.number5_high =(run_t.dispTime_hours) /10;
+            if(run_t.gPower_On == RUN_POWER_ON) {
+				lcd_t.number5_low=(run_t.dispTime_hours ) /10;
+				lcd_t.number5_high =(run_t.dispTime_hours) /10;
 
-			lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
-			lcd_t.number6_high = (run_t.dispTime_hours ) %10;
+				lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
+				lcd_t.number6_high = (run_t.dispTime_hours ) %10;
 
-			lcd_t.number7_low = (run_t.dispTime_minutes )/10;
-			lcd_t.number7_high = (run_t.dispTime_minutes )/10;
+				lcd_t.number7_low = (run_t.dispTime_minutes )/10;
+				lcd_t.number7_high = (run_t.dispTime_minutes )/10;
 
-			lcd_t.number8_low = (run_t.dispTime_minutes )%10;
-			lcd_t.number8_high = (run_t.dispTime_minutes )%10;
-						 
-            
-	
+				lcd_t.number8_low = (run_t.dispTime_minutes )%10;
+				lcd_t.number8_high = (run_t.dispTime_minutes )%10;
+			}
 
-	
-    break;
-    
-    case timer_time:
-	
-		Setup_Timer_Times();
-		Works_Counter_Time();
-	
-     
-     break;
-		
-    }
+}
+
+void Beijing_Time_Display_Handler(void(*beijing_time_handler)(void))
+{
+	beijing_time_fun = beijing_time_handler;
+
 }
 /*************************************************************************
 	*
@@ -767,8 +799,8 @@ void RunPocess_Command_Handler(void)
 			HAL_Delay(1);
 
 		}
-   	      Breath_Led();
-         
+   	    Breath_Led();
+         beijing_time_fun();
          if(run_t.gFan_RunContinue == 1){
            if(run_t.fan_off_60s < 61){
 		      LED_MODEL_OFF();
