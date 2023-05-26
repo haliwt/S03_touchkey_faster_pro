@@ -691,12 +691,12 @@ void RunPocess_Command_Handler(void)
 {
    //key input run function
 
-   static uint8_t temp1,temp2,key_set_temp_flag, link_wifi_success;
+   static uint8_t temp1,temp2,key_set_temp_flag, link_wifi_success,power_off_flag;
    static uint8_t power_on_fisrt_send_temperature_value, works_break_flag;
    switch(run_t.gPower_On){
 
    case RUN_POWER_ON:
-
+       power_off_flag=0;
        if(run_t.input_key_flag ==POWER_ON_ITEM && run_t.wifi_send_buzzer_sound != WIFI_POWER_ON_ITEM ){
 			run_t.input_key_flag=KEY_NULL;
             SendData_PowerOnOff(1);
@@ -827,13 +827,22 @@ void RunPocess_Command_Handler(void)
      break;
 
 	 case RUN_POWER_OFF:
-	    if(run_t.input_key_flag ==POWER_OFF_ITEM && run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM && run_t.power_off_buzzer_flag ==0){
-			run_t.input_key_flag=KEY_NULL;
+
+	    switch(power_off_flag){
+
+	    case 0 :
+	    if(run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM){
+			
             SendData_PowerOnOff(0);
-			HAL_Delay(10);
+		//	HAL_Delay(10);
 
 		}
-   	    Breath_Led();
+		power_off_flag=1;
+        break;
+
+        case 1:
+
+   	     Breath_Led();
          beijing_time_fun();
          if(run_t.gFan_RunContinue == 1){
            if(run_t.fan_off_60s < 61){
@@ -848,7 +857,11 @@ void RunPocess_Command_Handler(void)
 		   }
 
          }
+         run_t.input_key_flag=KEY_NULL;
+         break;
+      }
    
+      
     break;
    	}
 }

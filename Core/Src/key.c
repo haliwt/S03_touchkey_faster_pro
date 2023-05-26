@@ -150,7 +150,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
    
    switch(GPIO_Pin){
 
-      HAL_Delay(30);
+      HAL_Delay(20);
      case KEY_POWER_Pin:
 	 	if(POWER_KEY_VALUE() ==KEY_DOWN && run_t.power_times==1){
 			
@@ -376,9 +376,6 @@ void Key_TheSecond_Scan(void)
 
 				run_t.gKey_command_tag = POWER_OFF_ITEM; 
 				run_t.gTimer_key_start_counter=0;
-				  SendData_PowerOnOff(0);
-			      HAL_Delay(5);
-			      run_t.power_off_buzzer_flag =1;
                 return ;
 			}
 		}
