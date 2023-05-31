@@ -400,7 +400,7 @@ void Process_Key_Handler(uint8_t keylabel)
 static void Power_On_Fun(void)
 {
                 
-	run_t.gPower_On=1;
+	run_t.gPower_On=POWER_ON_ITEM;
 
 	
 	run_t.gFan_RunContinue=0;
@@ -693,17 +693,36 @@ void RunPocess_Command_Handler(void)
 
    static uint8_t temp1,temp2,key_set_temp_flag, link_wifi_success,power_off_flag;
    static uint8_t power_on_fisrt_send_temperature_value, works_break_flag;
+
    switch(run_t.gPower_On){
 
    case RUN_POWER_ON:
        power_off_flag=0;
-       if(run_t.input_key_flag ==POWER_ON_ITEM && run_t.wifi_send_buzzer_sound != WIFI_POWER_ON_ITEM ){
+
+       switch(run_t.step_run_power_on_tag){
+
+	   case 0: 
+       if(run_t.wifi_send_buzzer_sound != WIFI_POWER_ON_ITEM && run_t.input_key_flag ==POWER_ON_ITEM){
 			run_t.input_key_flag=KEY_NULL;
             SendData_PowerOnOff(1);
-			HAL_Delay(1);
+			HAL_Delay(20);
+			
 
 		}
+	   if(run_t.first_power_on_flag < 45){
+	   	 run_t.first_power_on_flag++;
   
+	       SendData_PowerOnOff(1);
+		   HAL_Delay(40);
+
+
+	   }
+	   if(run_t.first_power_on_flag > 44)
+	       run_t.step_run_power_on_tag =1;
+       break;
+
+	   case 1:
+        run_t.first_power_on_flag=51;
 	    Lcd_PowerOn_Fun();
 	    Timing_Handler();
 	    DisplayPanel_Ref_Handler();
@@ -713,7 +732,7 @@ void RunPocess_Command_Handler(void)
       //send timer timing value to main board 
       if(run_t.setup_timer_flag==1){
 		   run_t.setup_timer_flag++;
-
+           
 	       SendData_Time_Data(run_t.dispTime_hours);
 		  HAL_Delay(5);
 
@@ -823,18 +842,23 @@ void RunPocess_Command_Handler(void)
 
 
 	      }
-  
+	     break;
+       	}
      break;
 
 	 case RUN_POWER_OFF:
-
+         run_t.step_run_power_on_tag=0;
 	    switch(power_off_flag){
 
 	    case 0 :
 	    if(run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM){
-			
-            SendData_PowerOnOff(0);
-		//	HAL_Delay(10);
+			     if(run_t.first_power_on_flag !=2)
+                    SendData_PowerOnOff(0);
+		          if(run_t.first_power_on_flag ==2){
+		          	  run_t.first_power_on_flag++;
+                      
+
+		          }
 
 		}
 		power_off_flag=1;
@@ -899,7 +923,7 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 
 
 	 case WIFI_CMD://5
-	 	 
+	 	 run_t.step_run_power_on_tag =1;
 	 	 Receive_Wifi_Cmd(run_t.wifiCmd[0]);
 	 break;
 

@@ -150,7 +150,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
    
    switch(GPIO_Pin){
 
-      HAL_Delay(20);
+      HAL_Delay(30);
      case KEY_POWER_Pin:
 	 	if(POWER_KEY_VALUE() ==KEY_DOWN && run_t.power_times==1){
 			

@@ -191,11 +191,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             switch(run_t.single_data){
              case PANEL_DATA://1
                  run_t.gReal_humtemp[0]=inputBuf[0]; //Humidity value 
+                 run_t.step_run_power_on_tag=1;
                  state = 4;  
             break;
             case WIFI_INFO ://2
                   if(inputBuf[0]==0x01){
                      run_t.wifi_connect_flag =1;
+					 
 				     
                   }
                   else if(inputBuf[0]==0x0)
@@ -211,6 +213,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                  run_t.wifi_set_temperature=inputBuf[0]; 
                  state=0;
                  run_t.decodeFlag=1;
+
             break;
 
             case WIFI_CMD://5
@@ -298,7 +301,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			
 		     state=0;
 		     run_t.decodeFlag=1;
-	
+	         run_t.step_run_power_on_tag;
            
 		    break;
 
@@ -341,25 +344,20 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void USART1_Cmd_Error_Handler(void)
 {
     uint32_t temp;
-	
+	static uint8_t power_error;
 
 
-        if(run_t.gTimer_usart_error > 68){
+        if(run_t.gTimer_usart_error > 9 ){
+			power_error++;
 			run_t.gTimer_usart_error=0;
-			  __HAL_UART_GET_FLAG(&huart1,UART_FLAG_ORE);//UART_FLAG_NE
-                 __HAL_UART_GET_FLAG(&huart1,UART_FLAG_NE); //USART_ISR_FE
-                 __HAL_UART_GET_FLAG(&huart1,USART_ISR_FE);
-	         if(UART_FLAG_ORE==1){
-	           __HAL_UART_CLEAR_OREFLAG(&huart1);
-               __HAL_UART_CLEAR_NEFLAG(&huart1);
-               __HAL_UART_CLEAR_FEFLAG(&huart1);
-	          temp =USART1->ISR;
+			  __HAL_UART_CLEAR_OREFLAG(&huart1);
+	        
 	          temp = USART1->RDR;
 	     
 	     
 			  UART_Start_Receive_IT(&huart1,inputBuf,1);
 			
-	          }
+	          
          }
         
 
